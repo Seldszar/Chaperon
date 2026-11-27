@@ -57,7 +57,8 @@ fn main() -> Result<(), String> {
 
     println!("Process {} (ID: {}) found, waiting to exit...", pid, cli.process_name);
 
-    while sys.refresh_process_specifics(pid, ProcessRefreshKind::new()) && sys.process(pid).is_some_and(|p| p.start_time() == start_time) {
+    while sys.process(pid).is_some_and(|p| p.start_time() == start_time) {
+        sys.refresh_processes_specifics(ProcessRefreshKind::new());
         thread::sleep(poll);
     }
 
